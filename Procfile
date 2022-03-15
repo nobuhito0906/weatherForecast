@@ -1,1 +1,1 @@
-web: gunicorn --env DJANGO_SETTINGS_MODULE=weatherForecast.settings weatherForecast.wsgi --log-file -
+web: gunicorn --pythonpath weatherForecast weatherForecast.wsgi --log-file -
