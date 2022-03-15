@@ -17,3 +17,8 @@ def index(request):
         line_message.reply(reply_token)
         return HttpResponse("OK")
     return HttpResponse("Other Post..")
+
+@csrf_exempt
+def blank(request):
+    print(request.method)
+    return HttpResponse("Hello World!")
