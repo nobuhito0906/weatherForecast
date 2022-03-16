@@ -9,7 +9,7 @@ REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 HEADER = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer'+ACCESS_TOKEN
+    'Authorization': 'Bearer ' + ACCESS_TOKEN
 }
 
 
