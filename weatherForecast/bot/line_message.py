@@ -23,9 +23,6 @@ class LineMessage():
             'messages': self.messages
         }
         print("body:",body)
-        if not self.req_url:
-            print("位置情報送るよ")
-            REPLY_ENDPOINT_URL = self.req_url
         req = urllib.request.Request(
             REPLY_ENDPOINT_URL, json.dumps(body).encode(), HEADER)
         try:
@@ -35,6 +32,7 @@ class LineMessage():
             print(err)
         except urllib.error.URLError as err:
             print(err.reason)
+            
     def sendPosition(self, reply_token):
         body = {
             'replyToken': reply_token,
