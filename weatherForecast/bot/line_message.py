@@ -45,6 +45,7 @@ class LineMessage():
         try:
             with urllib.request.urlopen(req) as res:
                 body = res.read()
+                print("sendBody:",body)
         except urllib.error.HTTPError as err:
             print(err)
         except urllib.error.URLError as err:
