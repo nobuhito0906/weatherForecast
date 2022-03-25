@@ -35,3 +35,19 @@ class LineMessage():
             print(err)
         except urllib.error.URLError as err:
             print(err.reason)
+    def sendPosition(self, reply_token):
+        body = {
+            'replyToken': reply_token,
+            'messages': 'aaa'
+        }
+        print("body:",body)
+        print("位置情報送るよ、スキーム=",self.req_url)
+        req = urllib.request.Request(
+            self.req_url, json.dumps(body).encode(), HEADER)
+        try:
+            with urllib.request.urlopen(req) as res:
+                body = res.read()
+        except urllib.error.HTTPError as err:
+            print(err)
+        except urllib.error.URLError as err:
+            print(err.reason)
