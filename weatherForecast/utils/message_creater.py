@@ -1,3 +1,4 @@
+
 def create_single_text_message(message):
     if message == 'やあ':
         message = 'なんすか'
