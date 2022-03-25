@@ -14,15 +14,18 @@ HEADER = {
 
 
 class LineMessage():
-    def __init__(self, messages):
+    def __init__(self, messages, req_url):
         self.messages = messages
-
+        self.req_url = req_url
     def reply(self, reply_token):
         body = {
             'replyToken': reply_token,
             'messages': self.messages
         }
         print(body)
+        if not self.req_url:
+            print("位置情報送るよ")
+            REPLY_ENDPOINT_URL = self.req_url
         req = urllib.request.Request(
             REPLY_ENDPOINT_URL, json.dumps(body).encode(), HEADER)
         try:
