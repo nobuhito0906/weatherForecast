@@ -22,7 +22,7 @@ class LineMessage():
             'replyToken': reply_token,
             'messages': self.messages
         }
-        print(body)
+        print("body:",body)
         if not self.req_url:
             print("位置情報送るよ")
             REPLY_ENDPOINT_URL = self.req_url
