@@ -52,6 +52,7 @@ def handleLocale(event):
         longitude = event.message.longitude
         # 現在時刻
         dt_now = datetime.datetime.now()
+        print("NOW:",dt_now)
         # Open-Meteoの天気予報API
         opmtResponse = "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&hourly={}".format(
             latitude, longitude, dt_now.hour)
