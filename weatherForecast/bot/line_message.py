@@ -59,7 +59,7 @@ def handleLocale(event):
         query = {
             'latitude':latitude,
             'longitude':longitude,
-            'hourly':dt_now.hour
+            'hourly':'temperature_2m'
         }
         r = requests.get(url, query)
         res = r.json()
