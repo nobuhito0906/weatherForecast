@@ -4,7 +4,7 @@ from linebot import (
     LineBotApi, WebhookHandler
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, LocationMessage
 )
 from linebot.exceptions import (
     InvalidSignatureError
@@ -24,19 +24,9 @@ def reply(data, signature):
         return HttpResponse("Sigature Error..")
     return HttpResponse("OK")
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handleMessage(event):
-    print("type:",event.message.type)
-    if event.message.type == "location":
-        latitude = event.message.latitude
-        longitude = event.message.longitude
-        message = "緯度:{}\n経度:{}".format(latitude, longitude)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=message)
-        )
-    elif event.message.text == '現在地':
+    if event.message.text == '現在地':
         line_bot_api.reply_message(
             event.reply_token,
             [
@@ -48,4 +38,21 @@ def handleMessage(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=event.message.text)
+        )
+
+@handler.add(MessageEvent, message=LocationMessage)
+def handleLocale(event):
+    print("type:",event.message.type)
+    if event.message.type == "location":
+        latitude = event.message.latitude
+        longitude = event.message.longitude
+        message = "緯度:{}\n経度:{}".format(latitude, longitude)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=message)
+        )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="どこそれ")
         )
