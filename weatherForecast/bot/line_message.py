@@ -54,11 +54,13 @@ def handleLocale(event):
         longitude = event.message.longitude
         # Open-Meteo SDKを利用
         hourly =Hourly()
-        hourly.temperature_2m_max()
-        hourly.temperature_2m_min()
-        hourly.apparent_temperature_max()
-        hourly.apparent_temperature_min()
+        hourly.temperature_2m()
+        hourly.apparent_temperature()
         daily = Daily()
+        daily.temperature_2m_max()
+        daily.temperature_2m_min()
+        daily.apparent_temperature_max()
+        daily.apparent_temperature_min()
         tmz = timezones.Tokyo
         options = Options(latitude, longitude, timezone=tmz)
         
