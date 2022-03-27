@@ -1,5 +1,7 @@
 import json
 from django.http import HttpResponse
+import datetime
+import requests
 import os
 from linebot import (
     LineBotApi, WebhookHandler
@@ -10,8 +12,7 @@ from linebot.models import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-import datetime
-import requests
+from openmeteo_py import Hourly, Daily, Options, OWmanager
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 SECRET = os.getenv("CHANNEL_SECRET")
@@ -51,24 +52,22 @@ def handleLocale(event):
     if event.message.type == "location":
         latitude = event.message.latitude
         longitude = event.message.longitude
-        # 現在時刻
-        dt_now = datetime.datetime.now()
-        print("NOW:",dt_now)
-        # Open-Meteoの天気予報API
-        url = "https://api.open-meteo.com/v1/forecast"
-        query = {
-            'latitude':latitude,
-            'longitude':longitude,
-            'hourly':'temperature_2m'
-        }
-        r = requests.get(url, query)
-        res = r.json()
-        print("opmtResponse:", res)
+        # Open-Meteo SDKを利用
+        hourly =Hourly()
+        daily = Daily()
+        options = Options(latitude, longitude)
+        
+        mgr = OWmanager(options,
+            hourly.all(),
+            daily.all())
+        
+        meteo = mgr.get_data()
+        print("meteo:", meteo)
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=message),
-            TextSendMessage(res)
+            TextSendMessage(meteo)
         )
     else:
         line_bot_api.reply_message(
