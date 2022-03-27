@@ -27,6 +27,7 @@ def reply(data, signature):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handleMessage(event):
+    print("type:",event.message.type)
     if event.message.type == "location":
         latitude = event.message.latitude
         longitude = event.message.longitude
