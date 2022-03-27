@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from bot.line_message import LineMessage
+from bot import line_message
 
 @csrf_exempt
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
         signature = request.headers['X-Line-Signature']
         data = request['events'][0]
         print("data:",data)
-        LineMessage.reply(data, signature)
+        line_message.reply(data, signature)
         return HttpResponse("OK")
     return HttpResponse("Other Post..")
 
