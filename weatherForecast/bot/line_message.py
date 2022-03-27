@@ -12,7 +12,7 @@ from linebot.models import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from openmeteo_py import Hourly, Daily, Options, OWmanager
+from openmeteo_py import Hourly, Daily, Options, OWmanager, timezones
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 SECRET = os.getenv("CHANNEL_SECRET")
@@ -55,8 +55,8 @@ def handleLocale(event):
         # Open-Meteo SDKを利用
         hourly =Hourly()
         daily = Daily()
-        timezone = 'Asia/Tokyo'
-        options = Options(latitude, longitude, timezone)
+        tmz = timezones.Tokyo
+        options = Options(latitude, longitude, timezone=tmz)
         
         mgr = OWmanager(options,
             hourly.all(),
