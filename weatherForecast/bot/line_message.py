@@ -55,7 +55,8 @@ def handleLocale(event):
         # Open-Meteo SDKを利用
         hourly =Hourly()
         daily = Daily()
-        options = Options(latitude, longitude)
+        timezone = 'Asia/Tokyo'
+        options = Options(latitude, longitude, timezone)
         
         mgr = OWmanager(options,
             hourly.all(),
