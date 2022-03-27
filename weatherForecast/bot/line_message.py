@@ -1,52 +1,41 @@
-from distutils.log import error
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-import urllib.request
-import json
 import os
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
 
-REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-HEADER = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + ACCESS_TOKEN
-}
+SECRET = os.getenv("CHANNEL_SECRET")
 
+line_bot_api = LineBotApi(ACCESS_TOKEN)
+handler = WebhookHandler(SECRET)
 
-class LineMessage():
-    def __init__(self, messages):
-        self.messages = messages
-        
-    def reply(self, reply_token):
-        body = {
-            'replyToken': reply_token,
-            'messages': self.messages
-        }
-        print("body:",body)
-        req = urllib.request.Request(
-            REPLY_ENDPOINT_URL, json.dumps(body).encode(), HEADER)
-        try:
-            with urllib.request.urlopen(req) as res:
-                body = res.read()
-        except urllib.error.HTTPError as err:
-            print(err)
-        except urllib.error.URLError as err:
-            print(err.reason)
-            
-    # def sendPosition(self, reply_token):
-    #     body = {
-    #         'replyToken': reply_token,
-    #         'messages': 'aaa'
-    #     }
-    #     print("body:",body)
-    #     print("位置情報送るよ、スキーム=",self.req_url)
-    #     req = urllib.request.Request(
-    #         self.req_url, json.dumps(body).encode(), HEADER)
-    #     try:
-    #         with urllib.request.urlopen(req) as res:
-    #             body = res.read()
-    #             print("sendBody:",body)
-    #     except urllib.error.HTTPError as err:
-    #         print(err)
-    #     except urllib.error.URLError as err:
-    #         print(err.reason)
+def reply(data, signature):
+    try:
+        handler.handle(data, signature)
+    except InvalidSignatureError:
+        return HttpResponse("Sigature Error..")
+    return HttpResponse("OK")
+
+@handler.add(MessageEvent, message=TextMessage)
+def handleMessage(event):
+    print("text=",event.message.text)
+    if event.message.text == '現在地':
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="位置情報送るよ"),
+                TextSendMessage(text="https://line.me/R/nv/location/")
+            ]
+        )    
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=event.message.text)
+        )
