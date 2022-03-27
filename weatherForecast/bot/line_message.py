@@ -11,6 +11,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 import datetime
+import requests
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 SECRET = os.getenv("CHANNEL_SECRET")
@@ -54,14 +55,20 @@ def handleLocale(event):
         dt_now = datetime.datetime.now()
         print("NOW:",dt_now)
         # Open-Meteoの天気予報API
-        opmtResponse = "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&hourly={}".format(
-            latitude, longitude, dt_now.hour)
-        print("opmtResponse:", opmtResponse)
+        url = "https://api.open-meteo.com/v1/forecast"
+        query = {
+            'latitude':latitude,
+            'longitude':longitude,
+            'hourly':dt_now.hour
+        }
+        r = requests.get(url, query)
+        res = r.json()
+        print("opmtResponse:", res)
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=message),
-            TextSendMessage(opmtResponse.json())
+            TextSendMessage(res)
         )
     else:
         line_bot_api.reply_message(
