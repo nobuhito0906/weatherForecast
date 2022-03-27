@@ -60,7 +60,7 @@ def handleLocale(event):
         mgr = OWmanager(options,
             hourly.all(),
             daily.all())
-        
+        print("open-meteo SDK")
         meteo = mgr.get_data()
         print("meteo:", meteo)
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
