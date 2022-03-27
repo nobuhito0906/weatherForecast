@@ -54,13 +54,14 @@ def handleLocale(event):
         longitude = event.message.longitude
         # Open-Meteo SDKを利用
         hourly =Hourly()
-        daily = Daily()
+        # daily = Daily()
         tmz = timezones.Tokyo
         options = Options(latitude, longitude, timezone=tmz)
         
         mgr = OWmanager(options,
             hourly.all(),
-            daily.all())
+            # daily.all()
+            )
         print("open-meteo SDK")
         meteo = mgr.get_data()
         print("meteo:", meteo)
