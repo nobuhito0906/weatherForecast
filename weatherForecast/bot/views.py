@@ -11,6 +11,7 @@ def index(request):
     if request.method == 'POST':
         request = json.loads(request.body.decode('utf-8'))
         data = request['events'][0]
+        print("data:",data)
         message = data['message']
         reply_token=data['replyToken']
         if message['text'] == '現在地':
