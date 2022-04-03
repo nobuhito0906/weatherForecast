@@ -65,7 +65,7 @@ def handleLocale(event):
         options = Options(latitude, longitude,
                           current_weather="true", timezone=tmz)
 
-        mgr = OWmanager(options,hourly.all(),
+        mgr = OWmanager(options, hourly.all(),
                         daily.all())
         print("open-meteo SDK")
         data = mgr.get_data()
@@ -73,18 +73,20 @@ def handleLocale(event):
         temperature = currentWeather['temperature']
         windSpeed = currentWeather['windspeed']
         weatherCode = currentWeather['weathercode']
-        print("currentWeather:",currentWeather)
-        print("weathercode:",weatherCode)
-        print("temperature:",temperature)
-        print("windSpeed:",windSpeed)
-        currentText = "現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode,temperature,windSpeed)
-        print("currentText:",currentText)
+        print("currentWeather:", currentWeather)
+        print("weathercode:", weatherCode)
+        print("temperature:", temperature)
+        print("windSpeed:", windSpeed)
+        currentText = "現在の天気:{}\n気温:{}\n風速:{}".format(
+            weatherCode, temperature, windSpeed)
+        print("currentText:", currentText)
         maxTemperature = data['daily']['temperature_2m_max'][0]
         minTemperature = data['daily']['temperature_2m_min'][0]
-        print("daliy MaxTempature:",maxTemperature)
-        print("daily Min Tempature:",minTemperature)
-        max_min_text = "今日の最高気温:{0} 最低気温:{1}".format(maxTemperature,minTemperature)
-        print("max_min_text:",max_min_text)
+        print("daliy MaxTempature:", maxTemperature)
+        print("daily Min Tempature:", minTemperature)
+        max_min_text = "今日の最高気温:{}\n最低気温:{}".format(
+            maxTemperature, minTemperature)
+        print("max_min_text:", max_min_text)
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
             event.reply_token,
