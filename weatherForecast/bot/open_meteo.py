@@ -15,8 +15,16 @@ class Open_meteo:
 
         mgr = OWmanager(options,hourly.all(),daily)
         data = mgr.get_data()
-        print("currentWeather:",data['current_weather'])
-        print("weathercode:",data['current_weather']['weathercode'])
+        currentWeather = data['current_weather']
+        temperature = currentWeather['temperature']
+        windSpeed = currentWeather['windspeed']
+        weatherCode = currentWeather['weathercode']
+        print("currentWeather:",currentWeather)
+        print("weathercode:",weatherCode)
+        print("temperature:",temperature)
+        print("windSpeed:",windSpeed)
+        currentText = f"現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode,temperature,windSpeed)
+        print("text:",currentText)
         print("daliy MaxTempature:",data['daily']['temperature_2m_max'][0])
         print("daily Min Tempature:",data['daily']['temperature_2m_min'][0])
         print("Finish")

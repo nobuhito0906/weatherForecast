@@ -77,7 +77,7 @@ def handleLocale(event):
         print("weathercode:",weatherCode)
         print("temperature:",temperature)
         print("windSpeed:",windSpeed)
-        currentText = f"現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode)
+        currentText = f"現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode,temperature,windSpeed)
         print("daliy MaxTempature:",data['daily']['temperature_2m_max'][0])
         print("daily Min Tempature:",data['daily']['temperature_2m_min'][0])
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
