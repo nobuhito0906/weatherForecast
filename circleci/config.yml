@@ -18,7 +18,7 @@ jobs:
         paths:
           - .
 
-deploy: # this can be any name you choose
+deploy:
     docker:
       - image: cimg/python:3.10.1
     steps:
