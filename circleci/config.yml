@@ -17,3 +17,18 @@ jobs:
         root: ~/project
         paths:
           - .
+
+deploy: # this can be any name you choose
+    docker:
+      - image: cimg/python:3.10.1
+    steps:
+      - attach_workspace:
+          at: ~/project
+
+workflows:
+  weatherForecast:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test
