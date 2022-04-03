@@ -1,0 +1,19 @@
+version: 2.1
+orbs:
+  python: circleci/python@1.5.0
+  # heroku: circleci/heroku@1.2.6
+jobs:
+  build_and_test: "weatherForecast"
+    docker:
+      - image: cimg/python:3.10.1
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+        name: execute test
+        command: manage.py test
+      -persist_to_workspace:
+        root: ~/project
+        paths:
+          - .
