@@ -73,7 +73,7 @@ def handleLocale(event):
         temperature = currentWeather['temperature']
         windSpeed = currentWeather['windspeed']
         weatherCode = currentWeather['weathercode']
-        cnv_weather = converter.Converter.weatherCode(code=weatherCode)
+        cnv_weather = converter.Converter.weatherCode(self="", code=weatherCode)
         print("currentWeather:", currentWeather)
         print("cnv_weather:", cnv_weather)
         print("temperature:", temperature)
