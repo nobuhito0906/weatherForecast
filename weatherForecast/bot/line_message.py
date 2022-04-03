@@ -50,30 +50,41 @@ def handleMessage(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handleLocale(event):
-    print("event:",event)
-    # print("type:", event.message.type)
+    print("type:", event.message.type)
     if event.message.type == "location":
         latitude = event.message.latitude
         longitude = event.message.longitude
         # Open-Meteo SDKを利用
+        hourly = Hourly()
         daily = Daily()
         daily.temperature_2m_max()
         daily.temperature_2m_min()
         daily.apparent_temperature_max()
         daily.apparent_temperature_min()
         tmz = timezones.Tokyo
-        options = Options(latitude, longitude, timezone=tmz)
-        
-        mgr = OWmanager(options,
-            daily.all())
+        options = Options(latitude, longitude,
+                          current_weather="true", timezone=tmz)
+
+        mgr = OWmanager(options,hourly.all(),
+                        daily.all())
         print("open-meteo SDK")
-        meteo = mgr.get_data()
-        print("meteo:", meteo)
+        data = mgr.get_data()
+        currentWeather = data['current_weather']
+        temperature = currentWeather['temperature']
+        windSpeed = currentWeather['windspeed']
+        weatherCode = currentWeather['weathercode']
+        print("currentWeather:",currentWeather)
+        print("weathercode:",weatherCode)
+        print("temperature:",temperature)
+        print("windSpeed:",windSpeed)
+        currentText = f"現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode)
+        print("daliy MaxTempature:",data['daily']['temperature_2m_max'][0])
+        print("daily Min Tempature:",data['daily']['temperature_2m_min'][0])
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=message),
-            TextSendMessage(meteo)
+            TextSendMessage(currentText)
         )
     else:
         line_bot_api.reply_message(
