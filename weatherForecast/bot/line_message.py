@@ -1,4 +1,3 @@
-import json
 from django.http import HttpResponse
 import os
 from linebot import (
@@ -11,6 +10,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from openmeteo_py import Hourly, Daily, Options, OWmanager, timezones
+from utils import converter
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 if ACCESS_TOKEN != "":
@@ -73,12 +73,13 @@ def handleLocale(event):
         temperature = currentWeather['temperature']
         windSpeed = currentWeather['windspeed']
         weatherCode = currentWeather['weathercode']
+        cnv_weather = converter.Converter.weatherCode(weatherCode)
         print("currentWeather:", currentWeather)
-        print("weathercode:", weatherCode)
+        print("cnv_weather:", cnv_weather)
         print("temperature:", temperature)
         print("windSpeed:", windSpeed)
-        currentText = "現在の天気:{}\n気温:{}\n風速:{}".format(
-            weatherCode, temperature, windSpeed)
+        currentText = "今日は{}\n気温:{}\n風速:{}".format(
+            cnv_weather, temperature, windSpeed)
         print("currentText:", currentText)
         maxTemperature = data['daily']['temperature_2m_max'][0]
         minTemperature = data['daily']['temperature_2m_min'][0]

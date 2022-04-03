@@ -1,5 +1,4 @@
 from bot import line_message
-import unittest
 from django.test import TestCase
 import os
 import sys
@@ -9,7 +8,6 @@ sys.path.append(os.path.abspath("bot"))
 pprint.pprint(sys.path)
 
 # sut = line_message()
-
 
 class TestLine_message(TestCase):
     def test_handleLocale(self):
