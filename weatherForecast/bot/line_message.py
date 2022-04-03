@@ -91,8 +91,8 @@ def handleLocale(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=message),
-            TextSendMessage(text=currentText),
-            TextSendMessage(text=max_min_text)
+            # TextSendMessage(text=currentText),
+            # TextSendMessage(text=max_min_text)
         )
     else:
         line_bot_api.reply_message(
