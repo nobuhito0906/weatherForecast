@@ -77,12 +77,13 @@ def handleLocale(event):
         print("weathercode:",weatherCode)
         print("temperature:",temperature)
         print("windSpeed:",windSpeed)
-        currentText = f"現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode,temperature,windSpeed)
+        currentText = "現在の天気:{0} 気温:{1} 風速:{2}".format(weatherCode,temperature,windSpeed)
+        print("currentText:",currentText)
         maxTemperature = data['daily']['temperature_2m_max'][0]
         minTemperature = data['daily']['temperature_2m_min'][0]
         print("daliy MaxTempature:",maxTemperature)
         print("daily Min Tempature:",minTemperature)
-        max_min_text = f"今日の最高気温:{0} 最低気温:{1}".format(maxTemperature,minTemperature)
+        max_min_text = "今日の最高気温:{0} 最低気温:{1}".format(maxTemperature,minTemperature)
         print("max_min_text:",max_min_text)
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
