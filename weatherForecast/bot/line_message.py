@@ -90,15 +90,11 @@ def handleLocale(event):
         message = "緯度:{}\n経度:{}".format(latitude, longitude)
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=message)
-        )
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=currentText)
-        )
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=max_min_text)
+            [
+                TextSendMessage(text=message),
+                TextSendMessage(text=currentText),
+                TextSendMessage(text=max_min_text)
+            ]
         )
     else:
         line_bot_api.reply_message(
