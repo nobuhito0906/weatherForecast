@@ -10,7 +10,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from openmeteo_py import Hourly, Daily, Options, OWmanager, timezones
-from utils import converter
+from .utils import converter
 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 if ACCESS_TOKEN != "":
