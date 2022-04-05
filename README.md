@@ -1,49 +1,57 @@
 ## weather-forecast-linebot
 Weater-Forecast-LinebotはLINEBotを利用した天気予報返信アプリケーションです。
 
-## 環境構築～プロジェクト作成（備忘）
+「現在地」と打つと今日の最高・最低気温、現在の天気と風速が送られます。
+
+## 利用しているAPI
+・Line Messaging API
+
+・open-meteo SDK
+
+## 環境構築～プロジェクト作成
 
 １．Django用の仮想環境を構築
 PRJフォルダに移動し以下のコマンドを実行
-‵‵‵bash
+```bash
 py -m venv PRJ名
-‵‵‵
+```
 
 ２．Djangoのインストール
 PRJフォルダで以下のコマンドを実行（最新版インストール）
-‵‵‵bash
+```bash
 py -m pip install Django
-‵‵‵
+```
 上記コマンドでエラーが出た場合、バージョン指定でインストール
-‵‵‵bash
+```bash
 pip install -U django==2.2.1
-‵‵‵
+```
 以下のコマンドでインストールされたか確認できる
-‵‵‵bash
+```bash
 django-admin --version
-‵‵‵
+```
 
 ３．Djangoのプロジェクトを構成する
 コードを置きたいディレクトリで以下のコマンドを実行
-‵‵‵bash
+```bash
 django-admin startproject weatherForcast
-‵‵‵
+```
 ４．Djangoアプリを作成
 ３で作成したディレクトリで以下のコマンドを実行
-‵‵‵bash
+```bash
 python manage.py startapp bot
-‵‵‵
+```
 
 mysiteディレクトリが作成されたのを確認し、動作確認する
-‵‵‵bash
+```bash
 python manage.py runserver
-‵‵‵
+```
 
 ５．herokuへデプロイ
 herokuのアプリページのSettingsタブからpythonのbuildpackを追加する
 
 以下のコマンドを実行しGitからPushする
-‵‵‵bash
-git push heroku master:main
-‵‵‵
+```bash
+git push heroku master
+```
+※masterの部分はデプロイしたいブランチに書き換える
 
